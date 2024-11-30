@@ -1,0 +1,19 @@
+server:
+  port: 19090
+
+spring:
+  application:
+    name: server
+
+eureka:
+  instance:
+    # 클라이언트가 이 Eureka 서버에 접근할 때 사용할 호스트 이름
+    hostname: localhost
+  client:
+    # 이 서버를 다른 Eureka 서버에 등록하지 않음
+    register-with-eureka: false
+    # 다른 eureak 서버에 레지스트리를 가져오지 않음
+    fetch-registry: false
+    # eureak 클라이언트가 서버를 참조할 기본 URL
+    service-url:
+      defaultZone: http://localhost:19090/eureka/
