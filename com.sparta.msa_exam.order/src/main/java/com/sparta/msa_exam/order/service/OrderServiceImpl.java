@@ -10,6 +10,7 @@ import com.sparta.msa_exam.order.exception.CustomException;
 import com.sparta.msa_exam.order.exception.ExceptionType;
 import com.sparta.msa_exam.order.repository.OrderProductRepository;
 import com.sparta.msa_exam.order.repository.OrderRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class OrderServiceImpl implements OrderService{
         return new OrderCreateResDto(save);
     }
 
+    @CircuitBreaker(name = "orderService", fallbackMethod = "fallbackAddProduct")
     @Override
     @Transactional
     public void addProduct(Long orderId, ProductAddReqDto productAddReqDto) {
@@ -50,11 +52,15 @@ public class OrderServiceImpl implements OrderService{
             if(Objects.equals(productResDto.getProductId(), productAddReqDto.getProductId())){
                 Order order = orderRepository.findById(orderId).orElseThrow(() -> new CustomException(ExceptionType.ORDER_NOT_FOUND));
                 orderProductRepository.save(new OrderProduct(order, productResDto.getProductId()));
-                break;
+                return;
             }
         }
 
         throw new CustomException(ExceptionType.PRODUCT_NOT_MATCH);
+    }
+
+    public void fallbackAddProduct(Throwable t){
+        if (t instanceof CustomException) throw (CustomException) t;
     }
 
     public List<ProductResDto> getProducts() { return productClient.getProducts(); }
