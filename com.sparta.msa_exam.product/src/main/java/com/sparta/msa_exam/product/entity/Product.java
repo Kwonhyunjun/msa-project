@@ -3,8 +3,10 @@ package com.sparta.msa_exam.product.entity;
 import com.sparta.msa_exam.product.dto.ProductCreateReqDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
