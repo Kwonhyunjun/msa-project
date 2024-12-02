@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +21,8 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderProduct> product_ids = new ArrayList<>();
-    
+
+    public static Order create(){
+        return new Order();
+    }
 }
