@@ -1,5 +1,6 @@
 package com.sparta.msa_exam.product.entity;
 
+import com.sparta.msa_exam.product.dto.ProductCreateReqDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,8 @@ public class Product {
     @Column(name = "supply_price")
     private Integer supplyPrice;
 
+    public Product(ProductCreateReqDto productCreateReqDto){
+        this.name = productCreateReqDto.getName();
+        this.supplyPrice = productCreateReqDto.getSupplyPrice();
+    }
 }
