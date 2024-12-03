@@ -22,9 +22,24 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column
+    private Long kakaoId;
+
     public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String username, String password, String email, Long kakaoId) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.kakaoId =kakaoId;
+    }
+
+    public User kakaoIdUpdate(Long kakaoId) {
+        this.kakaoId = kakaoId;
+        return this;
     }
 }
