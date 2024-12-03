@@ -36,4 +36,14 @@ public class OrderController {
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> getOrder(
+            @PathVariable(name = "orderId") Long orderId
+    ){
+
+        log.info("orderId : {}", orderId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderService.getOrder(orderId));
+    }
 }

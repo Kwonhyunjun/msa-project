@@ -2,8 +2,10 @@ package com.sparta.msa_exam.order.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "order_product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

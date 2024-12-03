@@ -2,6 +2,7 @@ package com.sparta.msa_exam.order.service;
 
 import com.sparta.msa_exam.order.client.ProductClient;
 import com.sparta.msa_exam.order.dto.OrderCreateResDto;
+import com.sparta.msa_exam.order.dto.OrderResDto;
 import com.sparta.msa_exam.order.dto.ProductAddReqDto;
 import com.sparta.msa_exam.order.dto.ProductResDto;
 import com.sparta.msa_exam.order.entity.Order;
@@ -64,4 +65,16 @@ public class OrderServiceImpl implements OrderService{
     }
 
     public List<ProductResDto> getProducts() { return productClient.getProducts(); }
+
+    @Override
+    public OrderResDto getOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new CustomException(ExceptionType.ORDER_NOT_FOUND));
+        List<OrderProduct> orderProducts = orderProductRepository.findAllByOrderIdOrderByProductId(order.getId());
+
+        List<Long> productIds = orderProducts.stream()
+                .map(OrderProduct::getProductId)
+                .toList();
+
+        return new OrderResDto(order.getId(), productIds);
+    }
 }
