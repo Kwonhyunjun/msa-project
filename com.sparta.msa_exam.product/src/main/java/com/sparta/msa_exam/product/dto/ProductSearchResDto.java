@@ -4,9 +4,11 @@ import com.sparta.msa_exam.product.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class ProductSearchResDto {
+public class ProductSearchResDto implements Serializable {
 
     private Long productId;
     private String name;
