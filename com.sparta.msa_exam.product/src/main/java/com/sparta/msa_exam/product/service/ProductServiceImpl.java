@@ -5,6 +5,7 @@ import com.sparta.msa_exam.product.dto.ProductSearchResDto;
 import com.sparta.msa_exam.product.entity.Product;
 import com.sparta.msa_exam.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "productCache", allEntries = true)
     public void createProduct(ProductCreateReqDto productCreateReqDto) {
 
         productRepository.save(new Product(productCreateReqDto));
